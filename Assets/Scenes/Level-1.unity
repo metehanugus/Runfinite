@@ -1231,9 +1231,9 @@ MonoBehaviour:
   iceCountText: {fileID: 1277124569}
   fireCountText: {fileID: 279529741}
   playerMovement: {fileID: 943311030}
-  winningScore: 60
-  winningIceCount: 80
-  winningFireCount: 15
+  winningScore: 100
+  winningIceCount: 50
+  winningFireCount: 10
   timer: {fileID: 1689215276}
   completeLevelUI: {fileID: 1011568131}
 --- !u!4 &1778854409
