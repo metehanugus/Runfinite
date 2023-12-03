@@ -36,13 +36,13 @@ public class GroundTile : MonoBehaviour
     {
         int coinsToSpawn = 10;
         GameObject temp;
-        for (int i = 0; i < (coinsToSpawn/2)+2; i++)
+        for (int i = 0; i < (coinsToSpawn/2)+3; i++)
         {
             temp = Instantiate(coinPrefab,transform);
             temp.transform.position = GetRandomPointInCollider(GetComponent<Collider>());
 
         }
-        for (int i = (coinsToSpawn / 2) + 2; i < coinsToSpawn; i++)
+        for (int i = (coinsToSpawn / 2) + 3; i < coinsToSpawn; i++)
         {
             temp = Instantiate(minuscoinPrefab, transform);
             temp.transform.position = GetRandomPointInCollider(GetComponent<Collider>());

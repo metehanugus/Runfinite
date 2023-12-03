@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float horizontalMultiplier = 1.7f;
     public float speedIncreasePerPoint = 0.1f;
     public GameManager gameManager;
+    public GameObject DieUI;
 
 
     private void FixedUpdate()
@@ -45,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
     {
         alive = false;
         Invoke("Restart", 2);
+        DieUI.SetActive(true);
 
 
     }

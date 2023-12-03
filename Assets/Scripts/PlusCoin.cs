@@ -14,8 +14,9 @@ public class PlusCoin : MonoBehaviour
             return;
         }
         if (other.gameObject.name != "Player") return;
-
+        
         GameManager.inst.IncrementScore();
+        GameManager.inst.IncrementIceCount();
 
         Destroy(gameObject);
     }
