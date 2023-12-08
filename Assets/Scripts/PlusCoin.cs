@@ -13,12 +13,13 @@ public class PlusCoin : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-        if (other.gameObject.name != "Player") return;
-        
-        GameManager.inst.IncrementScore();
-        GameManager.inst.IncrementIceCount();
+        if (other.gameObject.CompareTag("Player"))
+        {
+            GameManager.inst.IncrementScore();
+            GameManager.inst.IncrementIceCount();
 
-        Destroy(gameObject);
+            Destroy(gameObject);
+        }
     }
 
     private void Update()

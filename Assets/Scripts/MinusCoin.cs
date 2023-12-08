@@ -13,9 +13,14 @@ public class MinusCoin : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-        if (other.gameObject.name != "Player") return;
 
-        
+        if (!other.CompareTag("Player"))
+        {
+            return;
+        }
+
+
+
         GameManager.inst.DecrementScore();
         GameManager.inst.IncrementFireCount();
 

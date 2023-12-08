@@ -15,11 +15,12 @@ public class PlusTime : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-        if (other.gameObject.name != "Player") return;
+        if (other.gameObject.CompareTag("Player"))
+        {
+            GameManager.inst.AddTime();
 
-        GameManager.inst.AddTime();
-
-        Destroy(gameObject);
+            Destroy(gameObject);
+        }
     }
 
     private void Update()
