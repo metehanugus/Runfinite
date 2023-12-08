@@ -879,6 +879,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 9172488344187782206, guid: 351520cd44a0ca24dbf8a49c389ae6ad, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 4721270450649682939, guid: 351520cd44a0ca24dbf8a49c389ae6ad, type: 3}
@@ -2243,6 +2247,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9172488344187782206, guid: 351520cd44a0ca24dbf8a49c389ae6ad, type: 3}
       propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 9172488344187782206, guid: 351520cd44a0ca24dbf8a49c389ae6ad, type: 3}
+      propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
