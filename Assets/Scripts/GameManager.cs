@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public int score;
     public int iceCount;
     public int fireCount;
+    public int playerMoney;
     public static GameManager inst;
     [SerializeField] Text scoreText;
     [SerializeField] Text iceCountText;
@@ -20,15 +21,39 @@ public class GameManager : MonoBehaviour
     public int winningFireCount;
     [SerializeField] CountdownTimer timer;
     public GameObject completeLevelUI;
+    public Text playerMoneyText;
 
 
+    private void Start()
+    {
+        LoadMoney();
+    }
 
-    public void IncrementScore()
+        public void IncrementScore()
     {
         score++;
         scoreText.text = "SCORE: " + score + "   /" + winningScore;
         playerMovement.speed += playerMovement.speedIncreasePerPoint;
 
+    }
+
+    public void AddMoney(int amount)
+    {
+        playerMoney += amount;
+        playerMoneyText.text = "Para: " + playerMoney;
+        SaveMoney();
+    }
+
+    void SaveMoney()
+    {
+        PlayerPrefs.SetInt("PlayerMoney", playerMoney);
+        PlayerPrefs.Save();
+    }
+
+    void LoadMoney()
+    {
+        playerMoney = PlayerPrefs.GetInt("PlayerMoney", 0); // 
+        playerMoneyText.text = "Para: " + playerMoney; // UI'yi güncelle
     }
 
     public void IncrementFireCount()

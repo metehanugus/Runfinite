@@ -25,6 +25,7 @@ public class FollowPlayer : MonoBehaviour
         // Player null deðilse takip et
         if (player != null)
         {
+            player = GameObject.FindGameObjectWithTag(playerTag)?.transform;
             Vector3 targetPos = player.position + offset;
             targetPos.x = 0;
             transform.position = targetPos;
