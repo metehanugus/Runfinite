@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] CountdownTimer timer;
     public GameObject completeLevelUI;
     public Text playerMoneyText;
-
+    public ShopManager shopManager;
 
     private void Start()
     {
