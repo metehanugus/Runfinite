@@ -58,3 +58,4 @@ MonoBehaviour:
   timer: {fileID: 0}
   completeLevelUI: {fileID: 0}
   playerMoneyText: {fileID: 0}
+  shopManager: {fileID: 0}
