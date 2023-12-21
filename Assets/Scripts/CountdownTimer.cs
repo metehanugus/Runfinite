@@ -12,7 +12,7 @@ public class CountdownTimer : MonoBehaviour
 
     void Start()
     {
-     timerSeconds = GetComponent<Text>();   
+     timerSeconds = GetComponent<Text>();
     }
 
     

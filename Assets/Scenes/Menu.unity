@@ -1279,7 +1279,7 @@ GameObject:
   - component: {fileID: 1457561256}
   - component: {fileID: 1457561255}
   m_Layer: 5
-  m_Name: RunderTension
+  m_Name: Runfinite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1317,7 +1317,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.23959565, b: 0.8207547, a: 1}
+  m_Color: {r: 0.81214494, g: 0.81960785, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1337,7 +1337,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: RUNDERSTORM
+  m_Text: RUNFINITE
 --- !u!222 &1457561256
 CanvasRenderer:
   m_ObjectHideFlags: 0

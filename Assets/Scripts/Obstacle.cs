@@ -13,7 +13,8 @@ public class Obstacle : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            playerMovement.Die();
+             playerMovement.Die(); 
+            
         }
         //Kill the player
 

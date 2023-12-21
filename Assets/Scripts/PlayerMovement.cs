@@ -1,6 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -10,7 +11,9 @@ public class PlayerMovement : MonoBehaviour
     public float horizontalMultiplier = 1.7f;
     public float speedIncreasePerPoint = 0.1f;
     public GameManager gameManager;
-    public GameObject DieUI;
+    public GameObject dieUI;
+    public Button reviveButton;
+    private bool revivied;
 
     private void FixedUpdate()
     {
@@ -50,18 +53,37 @@ public class PlayerMovement : MonoBehaviour
 
     public void Die()
     {
+      
         alive = false;
-        Invoke("Restart", 2);
-        DieUI.SetActive(true);
+        Invoke("DieUIActive", 1);
+        
+        
+        
 
 
     }
 
+    public void Revive()
+    {   
+        
+        revivied = true;
+        dieUI.SetActive(false);
+        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z-8);
+        alive = true;
+        
 
+    }
 
-    private void Restart()
+    private void DieUIActive()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        dieUI.SetActive(true);
+    }
+
+
+
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
 

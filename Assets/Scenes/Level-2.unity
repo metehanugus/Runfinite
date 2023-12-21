@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.273161, g: 0.29257455, b: 0.3761359, a: 1}
+  m_IndirectSpecularColor: {r: 0.27316332, g: 0.2925811, b: 0.3760645, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1610,7 +1610,7 @@ MonoBehaviour:
   rb: {fileID: 943311033}
   speed: 5
   horizontalMultiplier: 1.7
-  speedIncreasePerPoint: 0.2
+  speedIncreasePerPoint: 0.3
   gameManager: {fileID: 1778854408}
   dieUI: {fileID: 1953122173}
   reviveButton: {fileID: 647395710}
@@ -2834,7 +2834,7 @@ PrefabInstance:
       objectReference: {fileID: 1277124569}
     - target: {fileID: 3380166924263237016, guid: 99f57aa4e274dc4409a4b667b479f2ac, type: 3}
       propertyPath: winningScore
-      value: 30
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 3380166924263237016, guid: 99f57aa4e274dc4409a4b667b479f2ac, type: 3}
       propertyPath: fireCountText
