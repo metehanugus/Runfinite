@@ -530,7 +530,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1457561254}
-  - {fileID: 1108023217}
   - {fileID: 652409631}
   - {fileID: 1340883791}
   - {fileID: 1614950356}
@@ -629,7 +628,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3, y: 55}
+  m_AnchoredPosition: {x: 3, y: -686}
   m_SizeDelta: {x: 812.2, y: 152.2875}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &652409632
@@ -834,6 +833,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 591206609}
+  - {fileID: 1108023217}
   - {fileID: 541607245}
   - {fileID: 2055395950}
   m_Father: {fileID: 0}
@@ -1006,16 +1006,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1108023216}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2.0146, y: 1.7426, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 591206609}
+  m_Father: {fileID: 935877665}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -2300}
+  m_AnchoredPosition: {x: 0, y: -2866}
   m_SizeDelta: {x: 218.7593, y: 69.9903}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1108023218
@@ -1173,7 +1173,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2.6447, y: -159}
+  m_AnchoredPosition: {x: 2.6447, y: -900}
   m_SizeDelta: {x: 812.2, y: 152.2875}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1340883792
@@ -1539,7 +1539,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -576}
+  m_AnchoredPosition: {x: 0, y: -1111}
   m_SizeDelta: {x: 817.4893, y: 153.2792}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1614950357
@@ -1792,6 +1792,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 5a2ba12ee0c069b469b6ef872421343f, type: 3}
       propertyPath: m_Name
       value: model
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5a2ba12ee0c069b469b6ef872421343f, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 5a2ba12ee0c069b469b6ef872421343f, type: 3}
       propertyPath: m_Controller

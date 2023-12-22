@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Advertisements;
 
@@ -8,7 +8,6 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
     [SerializeField] string _androidAdUnitId = "Rewarded_Android";
     [SerializeField] string _iOSAdUnitId = "Rewarded_iOS";
     string _adUnitId = null; // This will remain null for unsupported platforms
-    [SerializeField] PlayerMovement player;
 
     void Awake()
     {
@@ -61,8 +60,25 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
         if (adUnitId.Equals(_adUnitId) && showCompletionState.Equals(UnityAdsShowCompletionState.COMPLETED))
         {
             Debug.Log("Unity Ads Rewarded Ad Completed");
-            // Grant a reward.
-            player.Revive();
+
+            // Etiketi "Player" olan aktif karakteri bul.
+            GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+            if (playerObject != null)
+            {
+                PlayerMovement playerMovement = playerObject.GetComponent<PlayerMovement>();
+                if (playerMovement != null)
+                {
+                    playerMovement.Revive();
+                }
+                else
+                {
+                    Debug.LogError("RewardedAds: Aktif 'Player' etiketli bir objede PlayerMovement komponenti bulunamadı.");
+                }
+            }
+            else
+            {
+                Debug.LogError("RewardedAds: 'Player' etiketli aktif bir obje bulunamadı.");
+            }
         }
     }
 

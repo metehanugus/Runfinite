@@ -1,19 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CharacterSelector : MonoBehaviour
 {
     public int currentCharacterIndex;
     public GameObject[] characters;
 
-
     void Start()
     {
         currentCharacterIndex = PlayerPrefs.GetInt("SelectedCharacter", 0);
-        foreach (GameObject character in characters)
-            character.SetActive(false);
+        UpdateCharacterSelection(currentCharacterIndex);
+    }
 
-        characters[currentCharacterIndex].SetActive(true);
+    public void UpdateCharacterSelection(int index)
+    {
+        // Önceki tüm karakterleri devre dışı bırak
+        foreach (GameObject character in characters)
+        {
+            character.SetActive(false);
+        }
+
+        // Yeni seçilen karakteri aktif et
+        characters[index].SetActive(true);
+        currentCharacterIndex = index;
     }
 }
