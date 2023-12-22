@@ -8,7 +8,7 @@ public class GroundTile : MonoBehaviour
     [SerializeField] GameObject minuscoinPrefab;
     [SerializeField] GameObject plustimePrefab;
     public GameObject[] buildingPrefabs;
-    public float buildingOffset = 1f;
+    public float buildingOffset = 15f;
     public float roadWidth = 5f;
 
     private void Start()

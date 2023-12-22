@@ -16,8 +16,12 @@ public class PlayerMovement : MonoBehaviour
     private bool revivied;
     public CanvasGroup buttonCanvasGroup;
 
+    
+
+
     void Start()
     {
+        
         // Oyun baþladýðýnda butonu gizle
         HideButton();
     }
@@ -84,6 +88,8 @@ public class PlayerMovement : MonoBehaviour
         // Oyuncuyu ölmeden önceki pozisyondan belli bir miktar geriye al.
         transform.position += Vector3.back * 8; // 8 birim geriye.
         alive = true;
+
+        
     }
 
 
@@ -119,4 +125,6 @@ public class PlayerMovement : MonoBehaviour
         buttonCanvasGroup.interactable = true;
         buttonCanvasGroup.blocksRaycasts = true;
     }
+
+    
 }
