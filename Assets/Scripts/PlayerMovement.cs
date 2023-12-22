@@ -64,15 +64,14 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public void Revive()
-    {   
-        
+    {
         revivied = true;
         dieUI.SetActive(false);
-        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z-8);
+        // Oyuncuyu ölmeden önceki pozisyondan belli bir miktar geriye al.
+        transform.position += Vector3.back * 8; // 8 birim geriye.
         alive = true;
-        
-
     }
+
 
     private void DieUIActive()
     {
