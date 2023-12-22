@@ -14,9 +14,18 @@ public class PlayerMovement : MonoBehaviour
     public GameObject dieUI;
     public Button reviveButton;
     private bool revivied;
+    public CanvasGroup buttonCanvasGroup;
+
+    void Start()
+    {
+        // Oyun baþladýðýnda butonu gizle
+        HideButton();
+    }
 
     private void FixedUpdate()
     {
+        
+
         if (!alive) return;
 
         Vector3 forwardMove = transform.forward * speed * Time.fixedDeltaTime;
@@ -41,6 +50,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        
+
         if (!alive) return;
 
         if (transform.position.y < -5)
@@ -56,15 +67,18 @@ public class PlayerMovement : MonoBehaviour
       
         alive = false;
         Invoke("DieUIActive", 1);
-        
-        
-        
+        Invoke("ShowButton", 1);
+
+
+
+
 
 
     }
 
     public void Revive()
     {
+        HideButton();
         revivied = true;
         dieUI.SetActive(false);
         // Oyuncuyu ölmeden önceki pozisyondan belli bir miktar geriye al.
@@ -85,5 +99,24 @@ public class PlayerMovement : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
+    public void BackMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
 
+    // Butonu Gizle
+    public void HideButton()
+    {
+        buttonCanvasGroup.alpha = 0;
+        buttonCanvasGroup.interactable = false;
+        buttonCanvasGroup.blocksRaycasts = false;
+    }
+
+    // Butonu Göster
+    public void ShowButton()
+    {
+        buttonCanvasGroup.alpha = 1;
+        buttonCanvasGroup.interactable = true;
+        buttonCanvasGroup.blocksRaycasts = true;
+    }
 }
