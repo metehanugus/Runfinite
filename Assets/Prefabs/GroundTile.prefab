@@ -368,7 +368,7 @@ MonoBehaviour:
   - {fileID: 9055112274125254944, guid: b05c8138689f126458e7f69eff351511, type: 3}
   - {fileID: 9170027422479897858, guid: fd35a4f041d705948957f1725fa81c41, type: 3}
   - {fileID: 3726648131083330931, guid: e8aa900ccb7efce4fb74764e6a06ad02, type: 3}
-  buildingOffset: 1
+  buildingOffset: 5
   roadWidth: 5
 --- !u!1 &3059321834332764372
 GameObject:
