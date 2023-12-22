@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.27312562, g: 0.29254457, b: 0.37611684, a: 1}
+  m_IndirectSpecularColor: {r: 0.2731649, g: 0.2925774, b: 0.3760708, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -280,17 +280,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3648632347972856187, guid: 8174f7b7434174940a12af311ed80653, type: 3}
   m_PrefabInstance: {fileID: 1886136465464977969}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &288723848 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7892941120263038817, guid: 8174f7b7434174940a12af311ed80653, type: 3}
-  m_PrefabInstance: {fileID: 1886136465464977969}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 288723846}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6170ee6572cb1ad4aaebfda4f8c96c01, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &338790922
 GameObject:
   m_ObjectHideFlags: 0
@@ -1275,7 +1264,6 @@ MonoBehaviour:
   _showAdButton: {fileID: 647395710}
   _androidAdUnitId: Rewarded_Android
   _iOSAdUnitId: Rewarded_iOS
-  player: {fileID: 288723848}
 --- !u!114 &647395710
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2829,7 +2817,7 @@ Transform:
   m_GameObject: {fileID: 2109679438}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.111713, y: -6.0641246, z: 20.057804}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
