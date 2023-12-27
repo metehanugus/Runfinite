@@ -139,8 +139,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 7440741450451753715}
   speed: 5
-  horizontalMultiplier: 1.7
+  horizontalMultiplier: 1
   speedIncreasePerPoint: 0.1
   gameManager: {fileID: 0}
   dieUI: {fileID: 0}
   reviveButton: {fileID: 0}
+  buttonCanvasGroup: {fileID: 0}

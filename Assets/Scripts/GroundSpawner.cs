@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GroundSpawner : MonoBehaviour
 {
@@ -8,10 +8,10 @@ public class GroundSpawner : MonoBehaviour
     public void SpawnTile(bool spawnItems)
     {
         GameObject temp = Instantiate(groundTile, nextSpawnPoint, Quaternion.identity);
-        nextSpawnPoint = temp.transform.GetChild(1).transform.position;
-
-        // Always spawn buildings regardless of spawnItems
-        
+        // Burada, sonraki spawn noktasını ayarlıyoruz. 
+        // Eğer GroundTile prefab'ınızın çocukları arasında bir referans noktası varsa (örneğin, bir sonraki tile'ın başlangıç noktası),
+        // bu referans noktasının indeksini kullanın.
+        nextSpawnPoint = temp.transform.GetChild(0).transform.position; // Bu indeks tile prefabınıza bağlı olarak değişebilir.
 
         if (spawnItems)
         {
@@ -20,6 +20,7 @@ public class GroundSpawner : MonoBehaviour
             temp.GetComponent<GroundTile>().SpawnBuildingsAroundTile();
         }
     }
+
 
     private void Start()
     {

@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
+using System.Linq;
+
 
 public class GroundTile : MonoBehaviour
 {
@@ -36,34 +39,46 @@ public class GroundTile : MonoBehaviour
 
     public void SpawnBuildingsAroundTile()
     {
-        Debug.Log("SpawnBuildingsAroundTile called");
+        float tileLength = GetComponent<BoxCollider>().size.z;
+        float startPosZ = transform.position.z - tileLength / 2;
+        float endPosZ = transform.position.z + tileLength / 2;
 
-        // Yolun her iki tarafında binalar yerleştirme
         for (int side = 0; side < 2; side++)
         {
-            // Debug log to check if the loop is entered
-            Debug.Log("Building side: " + side);
-
-            // Rastgele bir bina prefabı seç
-            GameObject buildingPrefab = buildingPrefabs[Random.Range(0, buildingPrefabs.Length)];
-
-            // Debug log to check the selected prefab
-            Debug.Log("Building prefab selected: " + buildingPrefab.name);
-
-            // Yol kenarlarında binalar yerleştirmek için pozisyon hesaplama
             Vector3 positionOffset = (side == 0 ? Vector3.right : Vector3.left) * (roadWidth + buildingOffset);
 
-            // Bir dizi bina yarat
-            for (float posZ = -50f; posZ < 50f; posZ += 20f)
+            // Bu liste, zaten spawn edilmiş bina pozisyonlarını takip edecek
+            List<float> usedPositions = new List<float>();
+
+            for (float posZ = startPosZ; posZ < endPosZ;)
             {
-                Vector3 buildingPosition = new Vector3(positionOffset.x, 0f, posZ);
+                GameObject buildingPrefab = buildingPrefabs[Random.Range(0, buildingPrefabs.Length)];
+                float buildingLength = buildingPrefab.GetComponent<Renderer>().bounds.size.z;
+
+                // Rastgele bir pozisyon seç, fakat önceden kullanılan pozisyonları kontrol et
+                float spawnPosZ;
+                do
+                {
+                    spawnPosZ = Random.Range(startPosZ, endPosZ);
+                } while (usedPositions.Any(usedPos => Mathf.Abs(usedPos - spawnPosZ) < buildingLength));
+
+                // Kullanılan pozisyon listesine bu pozisyonu ekle
+                usedPositions.Add(spawnPosZ);
+
+                // Spawn pozisyonunu ayarla
+                Vector3 buildingPosition = new Vector3(positionOffset.x, 0f, spawnPosZ);
+
+                // Bina objesini spawn et
                 Instantiate(buildingPrefab, buildingPosition, Quaternion.identity, transform);
 
-                // Debug log to check the position of the spawned building
-                Debug.Log("Building spawned at: " + buildingPosition);
+                // Sonraki spawn için posZ'yi güncelle
+                posZ += buildingLength + buildingOffset;
             }
         }
     }
+
+
+
 
     // Belirli bir kenar için bina pozisyonu hesaplama
     private Vector3 GetPositionForBuilding(int side)
