@@ -23,9 +23,4 @@ public class PlusTime : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        transform.Rotate(0, 0, turnSpeed * Time.deltaTime);
-    }
-
 }

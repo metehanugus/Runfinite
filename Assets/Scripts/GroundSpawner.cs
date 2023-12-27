@@ -5,17 +5,17 @@ public class GroundSpawner : MonoBehaviour
     [SerializeField] GameObject groundTile;
     Vector3 nextSpawnPoint;
 
+    public int tilesSpawned = 0;  // Spawn edilen tile sayısı
+
     public void SpawnTile(bool spawnItems)
     {
         GameObject temp = Instantiate(groundTile, nextSpawnPoint, Quaternion.identity);
-        // Burada, sonraki spawn noktasını ayarlıyoruz. 
-        // Eğer GroundTile prefab'ınızın çocukları arasında bir referans noktası varsa (örneğin, bir sonraki tile'ın başlangıç noktası),
-        // bu referans noktasının indeksini kullanın.
-        nextSpawnPoint = temp.transform.GetChild(0).transform.position; // Bu indeks tile prefabınıza bağlı olarak değişebilir.
+        nextSpawnPoint = temp.transform.GetChild(0).transform.position;
+        tilesSpawned++;  // Her tile spawn edildiğinde sayaç artar
 
         if (spawnItems)
         {
-            temp.GetComponent<GroundTile>().SpawnObstacle();
+            temp.GetComponent<GroundTile>().SpawnObstacle(tilesSpawned);  // Tile sayısını parametre olarak geçir
             temp.GetComponent<GroundTile>().SpawnCoins();
         }
     }

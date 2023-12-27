@@ -376,7 +376,7 @@ MonoBehaviour:
   - {fileID: 3318689441606926373, guid: d3ee913ed32937344b0587e70dc777a2, type: 3}
   - {fileID: 7570405467501425085, guid: 0ab22827d0f3f0b40a97e9430d684283, type: 3}
   - {fileID: 2954823824624447290, guid: 194e9111af0c33840a49d573f2b26952, type: 3}
-  treeOffset: 3
+  treeOffset: 20
 --- !u!1 &3059321834332764372
 GameObject:
   m_ObjectHideFlags: 0
