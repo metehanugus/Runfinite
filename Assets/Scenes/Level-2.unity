@@ -14,10 +14,10 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 0
-  m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  m_Fog: 1
+  m_FogColor: {r: 0.3490566, g: 0.3490566, b: 0.3490566, a: 1}
   m_FogMode: 3
-  m_FogDensity: 0.01
+  m_FogDensity: 0.02
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 2039a0ad0a9d05549928b70362f54902, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: e2341a9d03e86ec4290c72b1e22bbc7c, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.2731491, g: 0.29256347, b: 0.37613335, a: 1}
+  m_IndirectSpecularColor: {r: 0.8963437, g: 0.5407991, b: 0.5903443, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1044,11 +1044,12 @@ MonoBehaviour:
   rb: {fileID: 624263565}
   speed: 5
   horizontalMultiplier: 1
-  speedIncreasePerPoint: 0.1
+  speedIncreasePerPoint: 0.2
   gameManager: {fileID: 1778854408}
   dieUI: {fileID: 1953122173}
   reviveButton: {fileID: 647395710}
   buttonCanvasGroup: {fileID: 1429410972}
+  maxSpeed: 15
 --- !u!136 &624263564
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1699,6 +1700,7 @@ MonoBehaviour:
   dieUI: {fileID: 1953122173}
   reviveButton: {fileID: 647395710}
   buttonCanvasGroup: {fileID: 1429410972}
+  maxSpeed: 15
 --- !u!54 &943311033
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3223,7 +3225,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d39164121db856246a7c5db5b0f1c8bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundTile: {fileID: 2157467560397772179, guid: 5af464c04cadcfe47986d41e5c43a5b1, type: 3}
+  groundTile: {fileID: 2157467560397772179, guid: 4ecb330ae02fa71429e1ca08be0f430e, type: 3}
+  tilesSpawned: 0
 --- !u!4 &2109679440
 Transform:
   m_ObjectHideFlags: 0
@@ -3319,6 +3322,10 @@ PrefabInstance:
       propertyPath: buttonCanvasGroup
       value: 
       objectReference: {fileID: 1429410972}
+    - target: {fileID: 7892941120263038817, guid: 8174f7b7434174940a12af311ed80653, type: 3}
+      propertyPath: speedIncreasePerPoint
+      value: 0.2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

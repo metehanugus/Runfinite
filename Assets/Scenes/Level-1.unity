@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.27309453, g: 0.29254028, b: 0.376106, a: 1}
+  m_IndirectSpecularColor: {r: 0.2731572, g: 0.29257303, b: 0.3761194, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1044,11 +1044,12 @@ MonoBehaviour:
   rb: {fileID: 624263565}
   speed: 5
   horizontalMultiplier: 1
-  speedIncreasePerPoint: 0.1
+  speedIncreasePerPoint: 0.2
   gameManager: {fileID: 1778854408}
   dieUI: {fileID: 1953122173}
   reviveButton: {fileID: 647395710}
   buttonCanvasGroup: {fileID: 1429410972}
+  maxSpeed: 15
 --- !u!136 &624263564
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1699,6 +1700,7 @@ MonoBehaviour:
   dieUI: {fileID: 1953122173}
   reviveButton: {fileID: 647395710}
   buttonCanvasGroup: {fileID: 1429410972}
+  maxSpeed: 15
 --- !u!54 &943311033
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3322,7 +3324,7 @@ PrefabInstance:
       objectReference: {fileID: 1429410972}
     - target: {fileID: 7892941120263038817, guid: 8174f7b7434174940a12af311ed80653, type: 3}
       propertyPath: speedIncreasePerPoint
-      value: 0.5
+      value: 0.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
