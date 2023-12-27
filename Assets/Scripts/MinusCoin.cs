@@ -21,7 +21,7 @@ public class MinusCoin : MonoBehaviour
 
 
 
-        GameManager.inst.DecrementScore();
+        //GameManager.inst.DecrementScore();
         GameManager.inst.IncrementFireCount();
 
         Destroy(gameObject);

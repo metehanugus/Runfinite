@@ -21,9 +21,8 @@ public class GroundTile : MonoBehaviour
 
     private void Awake()
     {
-        gameManager = GameManager.inst;  // GameManager'ın örneğini al
+        gameManager = GameManager.inst;
     }
-
     private void Start()
     {
         groundSpawner = GameObject.FindObjectOfType<GroundSpawner>();
@@ -47,57 +46,91 @@ public class GroundTile : MonoBehaviour
     }
 
 
-    public void SpawnObstacle()
+    public void SpawnObstacle(int tilesSpawned)
     {
-        if (gameManager != null)
-        {
-            // Oyuncunun puanını GameManager'dan al
-            int playerScore = gameManager.score;
+        int spawnRate;  // Her kaç tile'da bir spawn olacak
 
-            // Puan 10 arttıkça bir engel ekle, maksimum 5'e kadar
+        // Tile sayısına göre spawn oranını belirle
+        if (tilesSpawned <= 20)
+        {
+            spawnRate = 5;
+        }
+        else if (tilesSpawned <= 30)
+        {
+            spawnRate = 4;
+        }
+        else if (tilesSpawned <= 40)
+        {
+            spawnRate = 3;
+        }
+        else
+        {
+            spawnRate = 2;  // 40. tile'dan sonra her 2 tile'da bir
+        }
+
+        // Belirli tile'larda engel spawn et
+        if (tilesSpawned % spawnRate == 0 && gameManager != null)
+        {
+            int playerScore = gameManager.score;
             int obstaclesToSpawn = Mathf.Clamp(playerScore / 10, 1, 5);
+
+            HashSet<int> usedSpawnIndexes = new HashSet<int>();
 
             for (int i = 0; i < obstaclesToSpawn; i++)
             {
-                int obstacleSpawnIndex = Random.Range(2, 5);
+                int obstacleSpawnIndex;
+                do
+                {
+                    obstacleSpawnIndex = Random.Range(2, 5);
+                } while (usedSpawnIndexes.Contains(obstacleSpawnIndex));
+
+                usedSpawnIndexes.Add(obstacleSpawnIndex);
                 Transform spawnPoint = transform.GetChild(obstacleSpawnIndex).transform;
                 Instantiate(obstaclePrefab, spawnPoint.position, Quaternion.identity, transform);
             }
         }
-        else
-        {
-            Debug.LogWarning("GameManager not found!");
-        }
     }
+
+
 
     public void SpawnTreesAroundTile()
     {
-        int minTreesToSpawn = 10; // Bu tile için en az 10 ağaç spawn edilecek
-        HashSet<Vector2> usedPositions = new HashSet<Vector2>(); // Kullanılan pozisyonları takip et (X ve Z)
+        int maxAttempts = 20;
+        int minTreesToSpawn = 10;
+        HashSet<Vector2> usedPositions = new HashSet<Vector2>();
 
         for (int i = 0; i < minTreesToSpawn; i++)
         {
             GameObject treePrefab = GetRandomTreePrefab();
             if (treePrefab != null)
             {
-                float side = Random.Range(-1f, 1f); // Her iki taraf için rastgele seçim
+                int attempts = 0;
                 Vector2 spawnPos;
                 do
                 {
-                    // Rastgele bir X ve Z pozisyonu seç, fakat önceden kullanılan pozisyonları kontrol et
-                    float spawnPosX = side * (roadWidth + Random.Range(1f, treeOffset));
+                    // Her iki taraf için rastgele seçim yap ve yolu aşacak şekilde pozisyon belirle
+                    float side = Random.Range(0, 2) * 2 - 1; // -1 veya 1 döner
+                    float spawnPosX = side * (roadWidth / 2 + Random.Range(buildingOffset, buildingOffset + treeOffset));
                     float spawnPosZ = Random.Range(-treeOffset, treeOffset) + transform.position.z;
                     spawnPos = new Vector2(spawnPosX, spawnPosZ);
-                } while (usedPositions.Contains(spawnPos) || Mathf.Abs(spawnPos.x) < roadWidth / 2);
 
-                // Kullanılan pozisyon listesine bu pozisyonu ekle
+                    if (++attempts > maxAttempts)
+                    {
+                        Debug.LogWarning("Max attempts reached, skipping tree spawn.");
+                        break;
+                    }
+                } while (usedPositions.Contains(spawnPos));
+
                 usedPositions.Add(spawnPos);
 
                 Vector3 treePosition = new Vector3(spawnPos.x + transform.position.x, 0f, spawnPos.y);
-                Instantiate(treePrefab, treePosition, Quaternion.identity, transform);
+                Quaternion treeRotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
+                Instantiate(treePrefab, treePosition, treeRotation, transform);
             }
         }
     }
+
+
 
 
     private GameObject GetRandomTreePrefab()
@@ -118,13 +151,21 @@ public class GroundTile : MonoBehaviour
 
         HashSet<float> usedPositions = new HashSet<float>();
 
+
         for (int side = 0; side < 2; side++)
         {
             Vector3 positionOffset = (side == 0 ? Vector3.right : Vector3.left) * (roadWidth + buildingOffset);
 
             float posZ = startPosZ;
+            int maxAttempts = 20;
+            int attempts = 0;
             while (posZ < endPosZ)
             {
+                if (++attempts > maxAttempts)
+                {
+                    Debug.LogWarning("Max attempts reached, skipping building spawn.");
+                    break; // Maksimum deneme sayısına ulaşıldıysa döngüden çık
+                }
                 GameObject buildingPrefab = buildingPrefabs[Random.Range(0, buildingPrefabs.Length)];
                 float buildingLength = buildingPrefab.GetComponent<Renderer>().bounds.size.z;
 

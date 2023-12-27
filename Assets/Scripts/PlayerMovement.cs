@@ -1,4 +1,4 @@
-using Unity.VisualScripting;
+﻿using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -15,14 +15,14 @@ public class PlayerMovement : MonoBehaviour
     public Button reviveButton;
     private bool revivied;
     public CanvasGroup buttonCanvasGroup;
+    [SerializeField] float maxSpeed = 15f;  // Maksimum hız sınırını belirle
 
-    
 
 
     void Start()
     {
         
-        // Oyun ba�lad���nda butonu gizle
+        // Oyun baþladýðýnda butonu gizle
         HideButton();
     }
 
@@ -39,11 +39,11 @@ public class PlayerMovement : MonoBehaviour
         {
             Touch touch = Input.GetTouch(0);
 
-            if (touch.position.x < Screen.width / 2) // Ekran�n sol yar�s�
+            if (touch.position.x < Screen.width / 2) // Ekranýn sol yarýsý
             {
                 horizontalMove = -transform.right * speed * Time.fixedDeltaTime * horizontalMultiplier;
             }
-            else // Ekran�n sa� yar�s�
+            else // Ekranýn sað yarýsý
             {
                 horizontalMove = transform.right * speed * Time.fixedDeltaTime * horizontalMultiplier;
             }
@@ -52,19 +52,26 @@ public class PlayerMovement : MonoBehaviour
         rb.MovePosition(rb.position + forwardMove + horizontalMove);
     }
 
-    private void Update()
+    void Update()
     {
-        
-
         if (!alive) return;
 
+        // Oyuncunun yere düşüp düşmediğini kontrol et
         if (transform.position.y < -5)
         {
             Die();
         }
 
+        // Skoru al ve hızı güncelle
+        if (gameManager)
+        {
+            int currentScore = gameManager.score;
+            speed = Mathf.Min(5f + (speedIncreasePerPoint * currentScore), maxSpeed);
+        }
+
         gameManager.LevelWon();
     }
+
 
     public void Die()
     {
@@ -85,7 +92,7 @@ public class PlayerMovement : MonoBehaviour
         HideButton();
         revivied = true;
         dieUI.SetActive(false);
-        // Oyuncuyu �lmeden �nceki pozisyondan belli bir miktar geriye al.
+        // Oyuncuyu ölmeden önceki pozisyondan belli bir miktar geriye al.
         transform.position += Vector3.back * 8; // 8 birim geriye.
         alive = true;
 
@@ -118,7 +125,7 @@ public class PlayerMovement : MonoBehaviour
         buttonCanvasGroup.blocksRaycasts = false;
     }
 
-    // Butonu G�ster
+    // Butonu Göster
     public void ShowButton()
     {
         buttonCanvasGroup.alpha = 1;
