@@ -14,11 +14,29 @@ public class GroundTile : MonoBehaviour
     public float buildingOffset = 15f;
     public float roadWidth = 5f;
 
+    [SerializeField] GameObject[] treePrefabs; // Ağaç prefabları
+    public float treeOffset = 5f; // Ağaçlar için yolun kenarından ne kadar uzakta spawn olacaklar
+
+    private GameManager gameManager;  // GameManager referansı
+
+    private void Awake()
+    {
+        gameManager = GameManager.inst;  // GameManager'ın örneğini al
+    }
+
     private void Start()
     {
         groundSpawner = GameObject.FindObjectOfType<GroundSpawner>();
-        SpawnBuildingsAroundTile();
 
+        // Rastgele şansla bina spawn etme veya kesinlikle ağaç spawn etme
+        if (Random.value > 0.8f) // %50 şans
+        {
+            SpawnBuildingsAroundTile();
+        }
+        else // Bina spawn edilmiyorsa, kesinlikle ağaçları spawn et
+        {
+            SpawnTreesAroundTile();
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -31,10 +49,65 @@ public class GroundTile : MonoBehaviour
 
     public void SpawnObstacle()
     {
-        int obstacleSpawnIndex = Random.Range(2, 5);
-        Transform spawnPoint = transform.GetChild(obstacleSpawnIndex).transform;
-        Instantiate(obstaclePrefab, spawnPoint.position, Quaternion.identity,transform);
+        if (gameManager != null)
+        {
+            // Oyuncunun puanını GameManager'dan al
+            int playerScore = gameManager.score;
 
+            // Puan 10 arttıkça bir engel ekle, maksimum 5'e kadar
+            int obstaclesToSpawn = Mathf.Clamp(playerScore / 10, 1, 5);
+
+            for (int i = 0; i < obstaclesToSpawn; i++)
+            {
+                int obstacleSpawnIndex = Random.Range(2, 5);
+                Transform spawnPoint = transform.GetChild(obstacleSpawnIndex).transform;
+                Instantiate(obstaclePrefab, spawnPoint.position, Quaternion.identity, transform);
+            }
+        }
+        else
+        {
+            Debug.LogWarning("GameManager not found!");
+        }
+    }
+
+    public void SpawnTreesAroundTile()
+    {
+        int minTreesToSpawn = 10; // Bu tile için en az 10 ağaç spawn edilecek
+        HashSet<Vector2> usedPositions = new HashSet<Vector2>(); // Kullanılan pozisyonları takip et (X ve Z)
+
+        for (int i = 0; i < minTreesToSpawn; i++)
+        {
+            GameObject treePrefab = GetRandomTreePrefab();
+            if (treePrefab != null)
+            {
+                float side = Random.Range(-1f, 1f); // Her iki taraf için rastgele seçim
+                Vector2 spawnPos;
+                do
+                {
+                    // Rastgele bir X ve Z pozisyonu seç, fakat önceden kullanılan pozisyonları kontrol et
+                    float spawnPosX = side * (roadWidth + Random.Range(1f, treeOffset));
+                    float spawnPosZ = Random.Range(-treeOffset, treeOffset) + transform.position.z;
+                    spawnPos = new Vector2(spawnPosX, spawnPosZ);
+                } while (usedPositions.Contains(spawnPos) || Mathf.Abs(spawnPos.x) < roadWidth / 2);
+
+                // Kullanılan pozisyon listesine bu pozisyonu ekle
+                usedPositions.Add(spawnPos);
+
+                Vector3 treePosition = new Vector3(spawnPos.x + transform.position.x, 0f, spawnPos.y);
+                Instantiate(treePrefab, treePosition, Quaternion.identity, transform);
+            }
+        }
+    }
+
+
+    private GameObject GetRandomTreePrefab()
+    {
+        if (treePrefabs == null || treePrefabs.Length == 0)
+        {
+            Debug.LogError("No tree prefabs are assigned!");
+            return null;
+        }
+        return treePrefabs[Random.Range(0, treePrefabs.Length)];
     }
 
     public void SpawnBuildingsAroundTile()
@@ -43,36 +116,27 @@ public class GroundTile : MonoBehaviour
         float startPosZ = transform.position.z - tileLength / 2;
         float endPosZ = transform.position.z + tileLength / 2;
 
+        HashSet<float> usedPositions = new HashSet<float>();
+
         for (int side = 0; side < 2; side++)
         {
             Vector3 positionOffset = (side == 0 ? Vector3.right : Vector3.left) * (roadWidth + buildingOffset);
 
-            // Bu liste, zaten spawn edilmiş bina pozisyonlarını takip edecek
-            List<float> usedPositions = new List<float>();
-
-            for (float posZ = startPosZ; posZ < endPosZ;)
+            float posZ = startPosZ;
+            while (posZ < endPosZ)
             {
                 GameObject buildingPrefab = buildingPrefabs[Random.Range(0, buildingPrefabs.Length)];
                 float buildingLength = buildingPrefab.GetComponent<Renderer>().bounds.size.z;
 
-                // Rastgele bir pozisyon seç, fakat önceden kullanılan pozisyonları kontrol et
-                float spawnPosZ;
-                do
+                // Generate a random position that hasn't been used
+                float spawnPosZ = Random.Range(posZ, endPosZ);
+                if (!usedPositions.Contains(spawnPosZ))
                 {
-                    spawnPosZ = Random.Range(startPosZ, endPosZ);
-                } while (usedPositions.Any(usedPos => Mathf.Abs(usedPos - spawnPosZ) < buildingLength));
-
-                // Kullanılan pozisyon listesine bu pozisyonu ekle
-                usedPositions.Add(spawnPosZ);
-
-                // Spawn pozisyonunu ayarla
-                Vector3 buildingPosition = new Vector3(positionOffset.x, 0f, spawnPosZ);
-
-                // Bina objesini spawn et
-                Instantiate(buildingPrefab, buildingPosition, Quaternion.identity, transform);
-
-                // Sonraki spawn için posZ'yi güncelle
-                posZ += buildingLength + buildingOffset;
+                    Vector3 buildingPosition = new Vector3(positionOffset.x, 0f, spawnPosZ);
+                    Instantiate(buildingPrefab, buildingPosition, Quaternion.identity, transform);
+                    usedPositions.Add(spawnPosZ);
+                    posZ = spawnPosZ + buildingLength + buildingOffset; // Move past the current building
+                }
             }
         }
     }
@@ -109,21 +173,33 @@ public class GroundTile : MonoBehaviour
 
     public void SpawnCoins()
     {
-        int coinsToSpawn = 10;
-        GameObject temp;
-        for (int i = 0; i < (coinsToSpawn/2)+3; i++)
-        {
-            temp = Instantiate(coinPrefab,transform);
-            temp.transform.position = GetRandomPointInCollider(GetComponent<Collider>());
+        // Rastgele sayıda objeler spawn etmek için sayıları belirle
+        int coinsToSpawn = Random.Range(0, 6); // 0-5 arası coin
+        int minusCoinsToSpawn = Random.Range(0, 4); // 0-3 arası minuscoin
+        int plusCoinsToSpawn = Random.Range(0, 3); // 0-2 arası plus coin
 
+        GameObject temp;
+
+        // Coin spawn etme
+        for (int i = 0; i < coinsToSpawn; i++)
+        {
+            temp = Instantiate(coinPrefab, transform);
+            temp.transform.position = GetRandomPointInCollider(GetComponent<Collider>());
         }
-        for (int i = (coinsToSpawn / 2) + 3; i < coinsToSpawn; i++)
+
+        // MinusCoin spawn etme
+        for (int i = 0; i < minusCoinsToSpawn; i++)
         {
             temp = Instantiate(minuscoinPrefab, transform);
             temp.transform.position = GetRandomPointInCollider(GetComponent<Collider>());
         }
-        temp = Instantiate(plustimePrefab, transform);
-        temp.transform.position = GetRandomPointInCollider(GetComponent<Collider>());
+
+        // PlusCoin spawn etme
+        for (int i = 0; i < plusCoinsToSpawn; i++)
+        {
+            temp = Instantiate(plustimePrefab, transform);
+            temp.transform.position = GetRandomPointInCollider(GetComponent<Collider>());
+        }
     }
 
     Vector3 GetRandomPointInCollider(Collider collider)
