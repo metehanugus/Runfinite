@@ -72,7 +72,9 @@ public class GroundTile : MonoBehaviour
         if (tilesSpawned % spawnRate == 0 && gameManager != null)
         {
             int playerScore = gameManager.score;
-            int obstaclesToSpawn = Mathf.Clamp(playerScore / 10, 1, 5);
+
+            // Puan 10 arttıkça bir engel ekle, maksimum 2'ye kadar
+            int obstaclesToSpawn = Mathf.Clamp(playerScore / 10, 1, 2);
 
             HashSet<int> usedSpawnIndexes = new HashSet<int>();
 
@@ -90,6 +92,7 @@ public class GroundTile : MonoBehaviour
             }
         }
     }
+
 
 
 

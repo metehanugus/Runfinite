@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     public GameManager gameManager;
     public GameObject dieUI;
     public Button reviveButton;
-    private bool revivied;
+    private bool revived;
     public CanvasGroup buttonCanvasGroup;
     [SerializeField] float maxSpeed = 15f;  // Maksimum hız sınırını belirle
 
@@ -90,7 +90,7 @@ public class PlayerMovement : MonoBehaviour
     public void Revive()
     {
         HideButton();
-        revivied = true;
+        revived = true;
         dieUI.SetActive(false);
         // Oyuncuyu ölmeden önceki pozisyondan belli bir miktar geriye al.
         transform.position += Vector3.back * 8; // 8 birim geriye.
