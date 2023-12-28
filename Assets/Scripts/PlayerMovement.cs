@@ -17,33 +17,32 @@ public class PlayerMovement : MonoBehaviour
     public CanvasGroup buttonCanvasGroup;
     [SerializeField] float maxSpeed = 15f;  // Maksimum hız sınırını belirle
 
-
-
     void Start()
     {
-        
-        // Oyun baþladýðýnda butonu gizle
         HideButton();
     }
 
     private void FixedUpdate()
     {
-        
-
         if (!alive) return;
 
         Vector3 forwardMove = transform.forward * speed * Time.fixedDeltaTime;
         Vector3 horizontalMove = Vector3.zero;
 
+        // Bilgisayar için klavye kontrolleri
+        float horizontalInput = Input.GetAxis("Horizontal"); // Klavyeden yatay girdi al
+        horizontalMove = transform.right * horizontalInput * speed * Time.fixedDeltaTime * horizontalMultiplier;
+
+        // Dokunmatik ekran desteği (Mobil cihazlar)
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
 
-            if (touch.position.x < Screen.width / 2) // Ekranýn sol yarýsý
+            if (touch.position.x < Screen.width / 2)
             {
                 horizontalMove = -transform.right * speed * Time.fixedDeltaTime * horizontalMultiplier;
             }
-            else // Ekranýn sað yarýsý
+            else
             {
                 horizontalMove = transform.right * speed * Time.fixedDeltaTime * horizontalMultiplier;
             }
@@ -56,13 +55,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!alive) return;
 
-        // Oyuncunun yere düşüp düşmediğini kontrol et
         if (transform.position.y < -5)
         {
             Die();
         }
 
-        // Skoru al ve hızı güncelle
         if (gameManager)
         {
             int currentScore = gameManager.score;
@@ -72,19 +69,11 @@ public class PlayerMovement : MonoBehaviour
         gameManager.LevelWon();
     }
 
-
     public void Die()
     {
-      
         alive = false;
         Invoke("DieUIActive", 1);
         Invoke("ShowButton", 1);
-
-
-
-
-
-
     }
 
     public void Revive()
@@ -92,20 +81,14 @@ public class PlayerMovement : MonoBehaviour
         HideButton();
         revived = true;
         dieUI.SetActive(false);
-        // Oyuncuyu ölmeden önceki pozisyondan belli bir miktar geriye al.
-        transform.position += Vector3.back * 8; // 8 birim geriye.
+        transform.position += Vector3.back * 8;
         alive = true;
-
-        
     }
-
 
     private void DieUIActive()
     {
         dieUI.SetActive(true);
     }
-
-
 
     public void Restart()
     {
@@ -117,7 +100,6 @@ public class PlayerMovement : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 
-    // Butonu Gizle
     public void HideButton()
     {
         buttonCanvasGroup.alpha = 0;
@@ -125,13 +107,10 @@ public class PlayerMovement : MonoBehaviour
         buttonCanvasGroup.blocksRaycasts = false;
     }
 
-    // Butonu Göster
     public void ShowButton()
     {
         buttonCanvasGroup.alpha = 1;
         buttonCanvasGroup.interactable = true;
         buttonCanvasGroup.blocksRaycasts = true;
     }
-
-    
 }
