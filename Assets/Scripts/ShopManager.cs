@@ -10,7 +10,7 @@ public class Character
     public string name;
     public int price;
     public bool isUnlocked;
-
+    public AudioClip voiceClip; // Her karakter için ses kaydı
 }
 
 public class ShopManager : MonoBehaviour
@@ -19,7 +19,7 @@ public class ShopManager : MonoBehaviour
     public GameObject[] characterModels;
     public Character[] characters;
     public Button buyButton;
-
+    public AudioSource voiceSource; // Ses kayıtlarını oynatmak için AudioSource
 
     void Start()
     {
@@ -30,17 +30,11 @@ public class ShopManager : MonoBehaviour
         characterModels[currentCharacterIndex].SetActive(true);
         foreach (Character character in characters)
         {
-            // PlayerPrefs'ten karakterin kilidini açma durumunu al
             character.isUnlocked = PlayerPrefs.GetInt("CharacterUnlocked_" + character.id, character.isUnlocked ? 1 : 0) == 1;
         }
         UpdateBuyButtonVisibility();
         UpdateBuyButtonEvent();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        PlayVoiceClip(); // Başlangıçta karakter sesini oynat
     }
 
     public void ChangeNext()
@@ -48,13 +42,14 @@ public class ShopManager : MonoBehaviour
         characterModels[currentCharacterIndex].SetActive(false);
 
         currentCharacterIndex++;
-        if(currentCharacterIndex == characterModels.Length)
+        if (currentCharacterIndex == characterModels.Length)
             currentCharacterIndex = 0;
 
         characterModels[currentCharacterIndex].SetActive(true);
         PlayerPrefs.SetInt("SelectedCharacter", currentCharacterIndex);
         UpdateBuyButtonVisibility();
         UpdateBuyButtonEvent();
+        PlayVoiceClip(); // Karakter değişikliği sırasında ses oynat
     }
 
     public void ChangePrevious()
@@ -63,12 +58,27 @@ public class ShopManager : MonoBehaviour
 
         currentCharacterIndex--;
         if (currentCharacterIndex == -1)
-            currentCharacterIndex = characterModels.Length -1;
+            currentCharacterIndex = characterModels.Length - 1;
 
         characterModels[currentCharacterIndex].SetActive(true);
         PlayerPrefs.SetInt("SelectedCharacter", currentCharacterIndex);
         UpdateBuyButtonVisibility();
         UpdateBuyButtonEvent();
+        PlayVoiceClip(); // Karakter değişikliği sırasında ses oynat
+    }
+
+    // Karakter sesini oynatmak için yeni bir metod
+    private void PlayVoiceClip()
+    {
+        if (currentCharacterIndex < 0 || currentCharacterIndex >= characters.Length)
+            return;
+
+        Character currentCharacter = characters[currentCharacterIndex];
+        if (currentCharacter.voiceClip != null)
+        {
+            voiceSource.clip = currentCharacter.voiceClip;
+            voiceSource.Play();
+        }
     }
 
     public void PurchaseCharacter(int characterIndex)

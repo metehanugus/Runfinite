@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+
 public class CharacterSelector : MonoBehaviour
 {
     public int currentCharacterIndex;
@@ -22,5 +23,6 @@ public class CharacterSelector : MonoBehaviour
         // Yeni seçilen karakteri aktif et
         characters[index].SetActive(true);
         currentCharacterIndex = index;
+
     }
 }
